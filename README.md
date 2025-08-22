@@ -46,10 +46,10 @@ uv pip install copier
 ### Create a new project interactively
 
 **Note**:
-If you create a git tag, replace HEAD with the tag name:
+If you create a git tag, replace HEAD with the tag name (Use the latest tag available). For example:
 
 ```bash
-copier copy --vcs-ref=v0.1.0 https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+copier copy --vcs-ref=v0.2.0 https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
 ```
 
 If you don’t use tags, you can keep:
