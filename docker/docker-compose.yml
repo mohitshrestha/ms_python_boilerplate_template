@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: ./Docker       # If Dockerfile is inside Docker folder
+      dockerfile: Dockerfile
+    container_name: {{ _package_name }}_app
+    environment:
+      ENV: development
+    env_file:
+      - ../.env               # Adjust relative path from Docker folder
+    volumes:
+      - ../:/app:cached       # Mount project folder, cache for performance
+    command: python -m src.{{ _package_name }}.main
+    ports:
+      - "8000:8000"           # Optional: expose port if app has API
+    restart: unless-stopped

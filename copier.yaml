@@ -1,0 +1,31 @@
+_project_name:
+  type: str
+  default: "ms_python_boilerplate"
+  help: "Display/Repository name (can contain hyphens, spaces)"
+
+_package_name:
+  type: str
+  default: "{{ _project_name.lower().replace('-', '_').replace(' ', '_') }}"
+  help: "Python importable package name (no hyphens, cannot start with number)"
+
+_backend_folder:
+  type: str
+  default: "backend"
+  help: "Backend module folder (optional, can rename)"
+
+_data_science_folder:
+  type: str
+  default: "data_science"
+  help: "Data Science module folder (optional, can rename)"
+
+_author_name:
+  type: str
+  default: "Mohit Shrestha"
+
+_author_email:
+  type: str
+  default: "contact@mohitshrestha.com.np"
+
+_python_version:
+  type: str
+  default: "3.13"
