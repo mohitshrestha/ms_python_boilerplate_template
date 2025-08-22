@@ -3,17 +3,16 @@
 # Reference: https://copier.readthedocs.io/en/stable/creating/
 # -----------------------------------------------------------------------------
 
+_message_before_copy: |
+  Welcome to {{ _project_name }} scaffolding!
+  You can press ENTER to accept defaults shown in [brackets].
+
 # -------------------------
 # Project display / repository name
 # -------------------------
 _project_name:
   type: str
-  default: "ms_python_boilerplate"
-  help: |
-    Display/Repository name.
-    Can contain hyphens, underscores, and spaces.
-    This is the name used for GitHub repo and project folder.
-    # Users can press ENTER to accept default or type a new name.
+  help: "Display/Repository name (required, no default)."
 
 # -------------------------
 # Python importable package name
@@ -74,15 +73,13 @@ _python_version:
 # -------------------------
 # Notes & Usage Tips:
 # -------------------------
-# 1. Copier will prompt for these variables interactively by default if no default is provided.
-# 2. Users can accept defaults by pressing ENTER.
-# 3. Users can force interactive mode or reuse answers:
-#    - Interactive prompt: 
-#       copier copy https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
-#    - Accept defaults for all: 
-#       copier copy -l https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+# 1. Copier automatically prompts for variables without default.
+# 2. Users can accept defaults for variables with default by pressing ENTER.
+# 3. Commands:
+#    - Interactive prompt (recommended for first run): 
+#         copier copy --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+#    - Use defaults for all variables (non-interactive): 
+#         copier copy -l --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
 #    - Reuse previous answers (from .copier-answers.yml):
-#       copier copy -a ./my_old_project/.copier-answers.yml https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./another_project
-# 4. Always use --vcs-ref=HEAD if no Git tags exist:
-#       copier copy --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
-# -----------------------------------------------------------------------------
+#         copier copy -a ./my_old_project/.copier-answers.yml --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./another_project
+# 4. Always use --vcs-ref=HEAD if your repo has no git tags.

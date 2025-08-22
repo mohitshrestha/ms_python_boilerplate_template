@@ -1,16 +1,21 @@
+
 services:
   app:
     build:
-      context: ./Docker       # If Dockerfile is inside Docker folder
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Docker/Dockerfile
     container_name: {{ _package_name }}_app
-    environment:
-      ENV: development
     env_file:
-      - ../.env               # Adjust relative path from Docker folder
+      - ./.env
+    environment:
+      ENV: development             # Override if needed
+      PYTHONUNBUFFERED: 1
+      PYTHONPATH: /app/src:/app/shared/src
     volumes:
-      - ../:/app:cached       # Mount project folder, cache for performance
-    command: python -m src.{{ _package_name }}.main
+      - ./src:/app/src:cached
+      - ./shared/src:/app/shared/src:cached
+    command: uv run main           # Default UV entrypoint
     ports:
-      - "8000:8000"           # Optional: expose port if app has API
+      - "8000:8000"                # Optional: only if app exposes API
     restart: unless-stopped
+    user: "1000:1000"              # Ensure non-root

@@ -1,23 +1,54 @@
-# Use slim Python image for smaller footprint
-FROM python:{{ _python_version }}-slim
+# -------------------------
+# Stage 1: Builder stage
+# -------------------------
+FROM python:{{ _python_version }}-slim AS builder
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy only pyproject.toml first to leverage Docker cache
+# Install build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip and install uv + uv_build
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir uv uv_build
+
+# Copy only project metadata for dependency installation
 COPY pyproject.toml /app/
 
-# Install pip and uv_build for building Python packages
-RUN pip install --upgrade pip && pip install uv_build
+# Create UV virtual environment and install dependencies
+RUN uv venv \
+    && uv pip install --no-cache-dir -e .
 
-# Copy the rest of the project into the container
-COPY . /app
+# -------------------------
+# Stage 2: Production stage
+# -------------------------
+FROM python:{{ _python_version }}-slim
 
-# Ensure Python outputs are immediately flushed
+# Create non-root user
+RUN groupadd --gid 1000 appuser \
+    && useradd --uid 1000 --gid appuser --shell /bin/bash --create-home appuser
+
+WORKDIR /app
+
+# Copy virtual environment from builder
+COPY --from=builder /app/.venv /app/.venv
+
+# Copy only necessary source code and configuration
+COPY src /app/src
+COPY shared/src /app/shared/src
+COPY .env* README.md /app/
+
+# Set environment variables
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app/src:/app/shared/src
 ENV PYTHONUNBUFFERED=1
 
-# Optional: set PATH for scripts if needed
-ENV PATH="/app/.venv/bin:$PATH"
+# Switch to non-root user
+USER appuser
 
-# Default command to run the main entry point of the package
-CMD ["python", "-m", "src.{{ _package_name }}.main"]
+# Default command (can be overridden in docker-compose)
+CMD ["uv", "run", "main"]
