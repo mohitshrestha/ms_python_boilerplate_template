@@ -29,9 +29,41 @@ Welcome to **{{ _project_name }}**, a fully modular, Copier-ready Python boilerp
 
 ### 1. Generate a new project
 
+## Using Copier to Create a New Project
+
+This project uses [Copier](https://copier.readthedocs.io/) to generate new projects from this template.
+
+### Prerequisites
+
+- [Copier](https://copier.readthedocs.io/en/stable/installation/) installed 
+
+### 1. Install Copier
+
 ```bash
-pip install copier
-copier copy ./ms_python_boilerplate_template ./my_new_project
+uv pip install copier
+```
+
+### Create a new project interactively
+
+**Note**:
+If you create a git tag, replace HEAD with the tag name:
+
+```bash
+copier copy --vcs-ref=v0.1.0 https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+```
+
+If you don’t use tags, you can keep:
+```bash
+copier copy --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+```
+
+- Copier will prompt for each variable defined in copier.yaml.
+- Press Enter to accept defaults.
+
+**Create a new project using all defaults**
+
+```bash
+copier copy -l --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
 ```
 
 **Copier** will ask for:
@@ -51,6 +83,11 @@ uv pip install -r requirements.txt
 ```
 
 UV will manage virtual environments, dependency isolation, and scripts.
+
+```bash
+uv init
+uv sync
+```
 
 ---
 

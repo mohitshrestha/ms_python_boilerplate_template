@@ -13,6 +13,7 @@ _project_name:
     Display/Repository name.
     Can contain hyphens, underscores, and spaces.
     This is the name used for GitHub repo and project folder.
+    # Users can press ENTER to accept default or type a new name.
 
 # -------------------------
 # Python importable package name
@@ -23,8 +24,8 @@ _package_name:
   help: |
     Python package name (used for imports).
     Must be a valid Python identifier: no hyphens, cannot start with a number.
-    By default, auto-generated from _project_name with safe replacements.
-    You can manually override if needed.
+    Defaults auto-generated from _project_name.
+    Users can override interactively or accept default.
 
 # -------------------------
 # Backend folder name
@@ -33,7 +34,7 @@ _backend_folder:
   type: str
   default: "backend"
   help: |
-    Name of the backend module folder inside src/.
+    Backend module folder inside src/.
     Optional: can rename if project structure differs.
 
 # -------------------------
@@ -43,7 +44,7 @@ _data_science_folder:
   type: str
   default: "data_science"
   help: |
-    Name of the data science module folder inside src/.
+    Data science module folder inside src/.
     Optional: can rename if project structure differs.
 
 # -------------------------
@@ -67,12 +68,21 @@ _python_version:
   default: "3.13"
   help: |
     Default Python version used in pyproject.toml and Dockerfile.
-    Must match Python version available on your system or Docker base image.
+    Users can override interactively.
+    Must match Python version available on system or Docker base image.
 
 # -------------------------
-# Notes:
-# - Variables defined here become Jinja placeholders in your template.
-# - If a user runs 'copier copy <repo> ./my_project --ask', they will be prompted
-#   for each of these variables unless defaults are used.
-# - You can add additional template variables here in the future as needed.
+# Notes & Usage Tips:
+# -------------------------
+# 1. Copier will prompt for these variables interactively by default if no default is provided.
+# 2. Users can accept defaults by pressing ENTER.
+# 3. Users can force interactive mode or reuse answers:
+#    - Interactive prompt: 
+#       copier copy https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+#    - Accept defaults for all: 
+#       copier copy -l https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
+#    - Reuse previous answers (from .copier-answers.yml):
+#       copier copy -a ./my_old_project/.copier-answers.yml https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./another_project
+# 4. Always use --vcs-ref=HEAD if no Git tags exist:
+#       copier copy --vcs-ref=HEAD https://github.com/mohitshrestha/ms_python_boilerplate_template.git ./my_new_project
 # -----------------------------------------------------------------------------
