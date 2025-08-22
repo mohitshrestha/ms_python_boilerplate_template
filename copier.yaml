@@ -1,31 +1,78 @@
+# -----------------------------------------------------------------------------
+# Copier template configuration for ms_python_boilerplate_template
+# Reference: https://copier.readthedocs.io/en/stable/creating/
+# -----------------------------------------------------------------------------
+
+# -------------------------
+# Project display / repository name
+# -------------------------
 _project_name:
   type: str
   default: "ms_python_boilerplate"
-  help: "Display/Repository name (can contain hyphens, spaces)"
+  help: |
+    Display/Repository name.
+    Can contain hyphens, underscores, and spaces.
+    This is the name used for GitHub repo and project folder.
 
+# -------------------------
+# Python importable package name
+# -------------------------
 _package_name:
   type: str
   default: "{{ _project_name.lower().replace('-', '_').replace(' ', '_') }}"
-  help: "Python importable package name (no hyphens, cannot start with number)"
+  help: |
+    Python package name (used for imports).
+    Must be a valid Python identifier: no hyphens, cannot start with a number.
+    By default, auto-generated from _project_name with safe replacements.
+    You can manually override if needed.
 
+# -------------------------
+# Backend folder name
+# -------------------------
 _backend_folder:
   type: str
   default: "backend"
-  help: "Backend module folder (optional, can rename)"
+  help: |
+    Name of the backend module folder inside src/.
+    Optional: can rename if project structure differs.
 
+# -------------------------
+# Data Science folder name
+# -------------------------
 _data_science_folder:
   type: str
   default: "data_science"
-  help: "Data Science module folder (optional, can rename)"
+  help: |
+    Name of the data science module folder inside src/.
+    Optional: can rename if project structure differs.
 
+# -------------------------
+# Author information
+# -------------------------
 _author_name:
   type: str
   default: "Mohit Shrestha"
+  help: "Author's full name."
 
 _author_email:
   type: str
   default: "contact@mohitshrestha.com.np"
+  help: "Author's email address."
 
+# -------------------------
+# Python version for UV & Docker
+# -------------------------
 _python_version:
   type: str
   default: "3.13"
+  help: |
+    Default Python version used in pyproject.toml and Dockerfile.
+    Must match Python version available on your system or Docker base image.
+
+# -------------------------
+# Notes:
+# - Variables defined here become Jinja placeholders in your template.
+# - If a user runs 'copier copy <repo> ./my_project --ask', they will be prompted
+#   for each of these variables unless defaults are used.
+# - You can add additional template variables here in the future as needed.
+# -----------------------------------------------------------------------------
